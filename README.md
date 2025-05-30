@@ -50,7 +50,17 @@ wordfreq-pipeline/
 ├── README.md
 └── Makefile                     # (Optional) Task automation (e.g. `make run`)
 ```
+### S3 Bucket Structure
 
+```bash
+s3://your-bucket-name/
+├── raw/             # Original .txt files (e.g., from Project Gutenberg)
+│   └── alice.txt
+├── cleaned/         # Cleaned .txt files (lowercase, no punctuation)
+│   └── alice_clean.txt
+├── output/          # Final outputs like word frequency CSVs
+│   └── wordfreq_alice.csv
+```
 
 ## Pipeline Flow
 
