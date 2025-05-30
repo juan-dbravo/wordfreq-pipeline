@@ -53,26 +53,26 @@ wordfreq-pipeline/
 ### S3 Bucket Structure
 
 ```bash
-s3://your-bucket-name/
-├── raw/             # Original .txt files (e.g., from Project Gutenberg)
-│   └── alice.txt
-├── cleaned/         # Cleaned .txt files (lowercase, no punctuation)
-│   └── alice_clean.txt
+s3://wordfreq-bucket-gutenberg/
+├── raw/             # Original .txt files (from Project Gutenberg)
+│   └── book.txt
+├── cleaned/         # Cleaned .txt files (lowercase, no punctuation, no blank spaces)
+│   └── book_clean.txt
 ├── output/          # Final outputs like word frequency CSVs
-│   └── wordfreq_alice.csv
+│   └── wordfreq_book.csv
 ```
 
 ## Pipeline Flow
 
-Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → Queries
+Project Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → Queries
 
 1. **Ingestion Pipeline (Reusable)**  
    📥 Download `.txt` books from Project Gutenberg  
-   ☁️ Upload to Amazon S3 under `s3://your-bucket/raw/gutenberg/`
+   ☁️ Upload to Amazon S3 under `s3://wordfreq-bucket-gutenberg /raw/gutenberg/`
 
 2. **Cleaning/Transformation Pipeline**  
    🧹 Clean and tokenize text  
-   ☁️ Store cleaned versions in `s3://your-bucket/cleaned/gutenberg/`
+   ☁️ Store cleaned versions in `s3://wordfreq-bucket-gutenberg /cleaned/gutenberg/`
 
 3. **Loading/Analytics Pipeline**  
    🐍 Convert to DataFrame, analyze  
