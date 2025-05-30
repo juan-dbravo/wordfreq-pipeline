@@ -1,15 +1,40 @@
 # wordfreq-pipeline
-# text-frequency-pipeline
 
 ## Project Summary
 
 **What is this?**  
-A modular, Airflow-orchestrated ETL pipeline that extracts a literary book from a `.txt` file, transforms it by cleaning and tokenizing the text, and loads the results into PostgreSQL as a word frequency table. It enables unique insights into the text through frequency analysis and visualization.
+A modular, Airflow-orchestrated ETL pipeline that extracts a `.txt` file, transforms it by cleaning and tokenizing the text, and loads the results into PostgreSQL as a word frequency table. It enables unique insights into the text through frequency analysis and visualization.
 
 **What for?**  
 The goal of this project is to demonstrate core data engineering concepts using literary text as raw input—showcasing ETL architecture, orchestration, data cleaning, and structured output generation.
 
----
+## Project structure
+
+- data
+      - raw_data
+      - clean_data  
+- extract
+- transform
+      - transform_utils.py
+      - transform.py
+      - README.md
+- load
+- README.md
+
+## Tech Stack
+
+- Python 3.10+
+
+- Apache Airflow (pipeline orchestration)
+
+- Docker + Docker Compose
+
+- pandas (data manipulation)
+
+- matplotlib (visualization)
+
+- PostgreSQL 
+
 
 ## Questions This Pipeline Helps Answer
 
