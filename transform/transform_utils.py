@@ -10,6 +10,7 @@ named Alice.txt and saved in the raw_data folder.
 from pathlib import Path
 import re
 from typing import List
+from nltk.corpus import stopwords
 
 def read_text_file(file_path: Path, preview: bool = False) -> str:
     """
@@ -76,16 +77,42 @@ def tokenize_text (cleaned_text: str, preview: bool = False) -> List[str]:
 
     return tokens
 
+def remove_stopwords (tokens: List[str], preview: bool = False ) -> List[str]:
+    """
+    Removes common English stopwords from a list of tokens.
 
+    Args:
+        tokens (List[str]): A list of word tokens.
+        preview (bool): If True, prints a preview of the result.
 
+    Returns:
+        List[str]: A new list with stopwords removed.
+    """
+    try:
+        stop_words = set(stopwords.words('english'))
+    except LookupError:
+        print("⚠️  NLTK 'stopwords' corpus not found. Downloading it now...")
+        nltk.download('stopwords')
+        stop_words = set(stopwords.words('english'))
+
+    removed_tokens= [word for word in tokens if word in stop_words]
+    filtered_tokens = [word for word in tokens if word not in stop_words]
+
+    print(" ✅ Stopwords succesfully removed")
+    if preview:
+        print(f"Preview of removed stopwords: {removed_tokens[:20]}")
+        print(f"Preview after stopword removal: {filtered_tokens[:20]}")
+
+    return filtered_tokens
 
 
 if __name__ == "__main__":
     # Example usage
     file_path = Path(__file__).parent.parent / "data/raw_data/Alice.txt"  # Replace with your actual file path
     try:
-        text = read_text_file(file_path)
-        cleaned_text = clean_text_file(text)
+        text = read_text_file(file_path, True)
+        cleaned_text = clean_text_file(text, True)
         tokens = tokenize_text(cleaned_text, True)
+        filtered_tokens = remove_stopwords(tokens, True)
     except Exception as e:
         print(f"Error: {e}")
