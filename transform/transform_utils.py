@@ -11,7 +11,16 @@ from pathlib import Path
 import re
 
 def read_text_file(file_path: Path, preview: bool = False) -> str:
-    """Reads the content of a .txt file and returns it as a string if preview is True"""
+    """
+    Reads the content of a .txt file and returns it as a string.
+
+    Args:
+        file_path (Path): Path to the text file.
+        preview (bool): If True, prints the first 500 characters of the file.
+
+    Returns:
+        str: Contents of the file.
+    """
     if not file_path.exists():
         raise FileNotFoundError(f"The file {file_path} does not exist.")
     text = file_path.read_text(encoding='utf-8')
@@ -26,6 +35,13 @@ def clean_text_file(text: str, preview: bool = False ) :
     - Lowercasing all characters
     - Removing punctuation marks
     - Normalizing whitespace
+
+    Args:
+        text (str): Input text to clean.
+        preview (bool): If True, prints the first 500 characters of the cleaned text.
+
+    Returns:
+        str: Cleaned version of the input text.
     """
     text = text.lower()
     text = re.sub(r"[.,!?;:¿¡()\"“”‘’'-]", "", text)  # Remove punctuation
@@ -40,9 +56,9 @@ def clean_text_file(text: str, preview: bool = False ) :
 
 if __name__ == "__main__":
     # Example usage
-    file_path = Path(__file__).parent / "Alice.txt"  # Replace with your actual file path
+    file_path = Path(__file__).parent.parent / "data/raw_data/Alice.txt"  # Replace with your actual file path
     try:
-        text = read_text_file(file_path)
+        text = read_text_file(file_path, True)
         text = clean_text_file(text, True)
     except Exception as e:
         print(f"Error: {e}")
