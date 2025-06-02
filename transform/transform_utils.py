@@ -10,8 +10,10 @@ from pathlib import Path
 import re
 from typing import List
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
 import nltk
+import spacy
+nlp = spacy.load("en_core_web_sm")
+
 
 def read_text_file(file_path: Path, preview: bool = False) -> str:
     """
@@ -107,35 +109,28 @@ def remove_stopwords (tokens: List[str], preview: bool = False ) -> List[str]:
 
     return filtered_tokens
 
-
-
 def lemmatize_tokens(tokens: List[str], preview: bool = False) -> List[str]:
     """
-    Reduces tokens to their base form using lemmatization.
+    Lemmatizes tokens using spaCy's language model.
 
     Args:
-        tokens (List[str]): A list of word tokens (typically already cleaned).
-        preview (bool): If True, prints a preview of lemmatization.
+        tokens (List[str]): A list of tokens (after cleaning and stopword removal).
+        preview (bool): If True, shows original → lemmatized.
 
     Returns:
-        List[str]: A list of lemmatized word tokens.
+        List[str]: List of lemmatized tokens.
     """
-    # Ensure corpus is available inside the function
-    try:
-        nltk.data.find('corpora/wordnet')
-    except LookupError:
-        print("⚠️  NLTK 'wordnet' corpus not found. Downloading...")
-        nltk.download('wordnet')
-
-    lemmatizer = WordNetLemmatizer()
-    lemmatized = [lemmatizer.lemmatize(token) for token in tokens]
+    
+    doc = nlp(" ".join(tokens))
+    lemmatized = [token.lemma_ for token in doc]
 
     if preview:
-        print(" Preview of lemmatization:")
-        for original, lemma in zip(tokens[:20], lemmatized[:20]):
-            print(f"  {original} → {lemma}")
+        print("🔍 spaCy Lemmatization Preview:")
+        for original, lemma in zip(tokens[:100], lemmatized[:100]):
+            print(f"  {original:12} → {lemma}")
 
     return lemmatized
+
 
 if __name__ == "__main__":
     # Example usage
@@ -145,7 +140,7 @@ if __name__ == "__main__":
         cleaned_text = clean_text_file(text, True)
         tokens = tokenize_text(cleaned_text, True)
         filtered_tokens = remove_stopwords(tokens, True)
-        lemnatized_tokens = lemmatize_tokens(filtered_tokens, True)
+        lemmatized_tokens = lemmatize_tokens(filtered_tokens, True)
 
     except Exception as e:
         print(f"Error: {e}")
