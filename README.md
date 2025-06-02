@@ -1,6 +1,6 @@
 # WordFreq Pipeline
 
-End-to-end text ETL from raw .txt books to PostgreSQL, using S3, Python, and Airflow.
+End-to-end text ETL pipeline from raw .txt books to PostgreSQL, using S3, Python, and Airflow.
 
 ---
 
@@ -28,6 +28,8 @@ Is to demonstrate core data engineering concepts using literary texts as raw inp
 
 
 ## Installation Instructions
+
+- Fill when finished
 
 ## Project structure
 
@@ -102,17 +104,11 @@ Project Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → 
 ## Tech Stack
 
 - Python 3.10+
-
 - Apache Airflow (pipeline orchestration)
-
 - Docker + Docker Compose
-
 - pandas (data manipulation)
-
 - matplotlib (visualization)
-
 - PostgreSQL
-- 
 - Amazon S3 (data lake storage)
 
 ## Questions This Pipeline Helps Answer
@@ -134,4 +130,5 @@ Project Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → 
 
 ## Usage Examples
 
+- Fill when finished
 
