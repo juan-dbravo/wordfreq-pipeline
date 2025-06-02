@@ -31,11 +31,11 @@ def run_pipeline(file_path: Path, preview: bool = True):
     return df
 
 if __name__ == "__main__":
-    input_path = Path(__file__).parent.parent / "data/raw_data/Alice.txt"
+    input_path = Path(__file__).parent.parent / "data/raw_data/robin_hood.txt"
     df = run_pipeline(input_path, preview=True)
 
     # Save result
-    output_path = Path(__file__).parent.parent / "data/clean_data/alice_lemmas.csv"
+    output_path = Path(__file__).parent.parent / "data/clean_data/robin_lemmas.csv"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(output_path, index=False)
-    print(f"\nSaved to: {output_path}")
+    print(f"\nSaved to: {output_path}\n")
