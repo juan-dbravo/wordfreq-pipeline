@@ -89,17 +89,17 @@ s3://wordfreq-bucket-gutenberg/
 Project Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → Queries
 
 1. **Ingestion Pipeline (Reusable)**  
-   📥 Download `.txt` books from Project Gutenberg  
-   ☁️ Upload to Amazon S3 under `s3://wordfreq-bucket-gutenberg /raw/gutenberg/`
+   - Download `.txt` books from Project Gutenberg  
+   - Upload to Amazon S3 under `s3://wordfreq-bucket-gutenberg /raw/gutenberg/`
 
 2. **Cleaning/Transformation Pipeline**  
-   🧹 Clean and tokenize 
-   🐍 Convert to DataFrame as a word count
-   ☁️ Store cleaned versions in `s3://wordfreq-bucket-gutenberg /cleaned/gutenberg/`
+   - Clean and tokenize 
+   - Convert to DataFrame as a word count
+   - Store cleaned versions in `s3://wordfreq-bucket-gutenberg /cleaned/gutenberg/`
 
 3. **Loading/Analytics Pipeline**  
-   🛢️ Load word frequency data into PostgreSQL  
-   📊 Use SQL queries or dashboards for insightsion
+   - Load word frequency data into PostgreSQL  
+   - Use SQL queries or dashboards for insightsion
    
 ## Tech Stack
 
