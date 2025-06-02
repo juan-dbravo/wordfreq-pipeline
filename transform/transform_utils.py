@@ -40,12 +40,13 @@ def read_text_file(file_path: Path, preview: bool = False) -> str:
     """
     if not file_path.exists():
         raise FileNotFoundError(f"The file {file_path} does not exist.")
+    
     text = file_path.read_text(encoding='utf-8')
     logger.info("✅ Text successfully recognized")
 
     if preview:
-        print("\nPreview of raw file content:")
-        print(text[:20]) 
+        logger.debug("✅ Preview of raw file content: %s", text[:50])
+         
     return text
 
 def clean_text_file(text: str, preview: bool = False) -> str:
@@ -77,7 +78,7 @@ def clean_text_file(text: str, preview: bool = False) -> str:
     logger.info("✅ Text successfully cleaned using spaCy")
 
     if preview:
-        logger.debug("Preview of cleaned text: %s", cleaned_text[:20])
+        logger.debug("✅ Preview of cleaned text: %s", cleaned_text[:50])
 
     return cleaned_text
 
@@ -118,7 +119,7 @@ def lemmatize_tokens(tokens: List[str], preview: bool = False) -> List[str]:
     logger.info(f"🔥 Extracted {len(set(lemmatized))} unique lemmas ")
 
     if preview:
-        print("\nspaCy Lemmatization Preview:")
+        logger.info("\n       ✅ spaCy Lemmatization Preview:\n")
         for original, lemma in zip(tokens[:10], lemmatized[:10]):
             logger.info(f"  {original:12} → {lemma}")
 
@@ -143,7 +144,7 @@ def count_frequency (lemmatized : List[str], preview: bool = False) -> pd.DataFr
     df = df.reset_index(drop=True)
     df.index += 1
 
-    logger.info(f"✅ Final DataFrame shape: {df.shape}\n")
+    logger.info(f"\n       ✅ Final DataFrame shape: {df.shape}\n")
     if preview:
         print(df.head(10))
     return df
