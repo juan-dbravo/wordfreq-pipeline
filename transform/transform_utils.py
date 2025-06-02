@@ -13,8 +13,6 @@ from collections import Counter
 
 import pandas as pd
 import spacy
-import nltk
-from nltk.corpus import stopwords
 
 nlp = spacy.load("en_core_web_sm")
 
