@@ -150,7 +150,10 @@ def count_frequency (lemmatized : List[str], preview: bool = False) -> pd.DataFr
 
     word_counts = Counter(lemmatized)  # This turns the list into a dict.
     df = pd.DataFrame(word_counts.items(), columns=["lemma", "frequency"])
-    
+    df = df.sort_values(by=["lemma","frequency"], ascending=[True, True])
+    df = df.reset_index(drop=True)
+    df.index += 1
+
     print(f"\n✅ Final DataFrame shape: {df.shape}\n")
     if preview:
         print(df.head(10))
