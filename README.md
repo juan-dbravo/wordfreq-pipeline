@@ -18,7 +18,7 @@ End-to-end text ETL pipeline from raw .txt books to PostgreSQL, using S3, Python
 ## Project Overview
 
 ***What is this?***  
-A modular, Airflow-orchestrated ETL pipeline that ingests .txt books from Project Gutenberg, uploads them to Amazon S3 (raw zone), processes them with Python by cleaning and tokenizing the text, and stores the cleaned output in S3 (processed zone). The resulting word frequency data is then loaded into PostgreSQL for analysis using SQL queries.
+A modular, Airflow-orchestrated ETL pipeline that *ingests* .txt books from Project Gutenberg, *uploads* them to Amazon S3 (raw zone), and *processes* them using natural language processing (NLP) techniques in Python — including text cleaning, tokenization, and lemmatization. The cleaned output is *stored* in S3 (processed zone), and the resulting word frequency data is *loaded* into PostgreSQL for analysis using SQL queries.
 
 ***Applications***
 This could be used as a tool to analyze documents, customer reviews, or legal texts for insight based on word frequency.
