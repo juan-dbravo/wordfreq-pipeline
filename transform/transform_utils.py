@@ -39,28 +39,37 @@ def read_text_file(file_path: Path, preview: bool = False) -> str:
         print(text[:20])  # Show the first 500 characters
     return text
 
-def clean_text_file(text: str, preview: bool = False ) :
+def clean_text_file(text: str, preview: bool = False) -> str:
     """
     Cleans a text string by:
-    - Lowercasing all characters
-    - Removing punctuation marks
-    - Normalizing whitespace
+    - Lowercasing all tokens
+    - Removing numbers, punctuation, symbols, and alphanumeric garbage
+    - Removing stopwords
+    - Keeping only alphabetic words
 
     Args:
         text (str): Input text to clean.
         preview (bool): If True, prints the first 500 characters of the cleaned text.
 
     Returns:
-        str: Cleaned version of the input text.
+        str: Cleaned version of the input text with valid word tokens.
     """
-    text = text.lower()
-    text = re.sub(r"[.,!?;:¿¡()\"“”‘’'-]", "", text)  # Remove punctuation
-    cleaned_text = re.sub(r"\s+", " ", text).strip()  # Remove extra spaces
-    print("\n✅ Text succesfully cleaned from punctuation and extra spaces")
+    doc = nlp(text)
+
+    # Keep only lowercase alphabetic tokens (filter out numbers, punctuation, symbols)
+    words = [
+        token.text.lower()
+        for token in doc
+        if token.is_alpha and not token.is_stop
+    ]
+
+    cleaned_text = " ".join(words)
+
+    print("\n✅ Text successfully cleaned using spaCy")
 
     if preview:
-        print("\nPreview of raw file content:")
-        print(cleaned_text[:20])  # Show the first 500 characters
+        print("\n🔍 Preview of cleaned text:")
+        print(cleaned_text[:500])
 
     return cleaned_text
 
@@ -83,35 +92,6 @@ def tokenize_text (cleaned_text: str, preview: bool = False) -> List[str]:
         print(tokens[:10])
 
     return tokens
-
-def remove_stopwords (tokens: List[str], preview: bool = False ) -> List[str]:
-    """
-    Removes common English stopwords from a list of tokens.
-
-    Args:
-        tokens (List[str]): A list of word tokens.
-        preview (bool): If True, prints a preview of the result.
-
-    Returns:
-        List[str]: A new list with stopwords removed.
-    """
-    # Ensure corpus is available inside the function
-    try:
-        stop_words = set(stopwords.words('english'))
-    except LookupError:
-        print("⚠️  NLTK 'stopwords' corpus not found. Downloading it now...")
-        nltk.download('stopwords')
-        stop_words = set(stopwords.words('english'))
-
-    removed_tokens= [word for word in tokens if word in stop_words]
-    filtered_tokens = [word for word in tokens if word not in stop_words]
-
-    print(f"\n✅ Removed {len(removed_tokens)} stopwords out of {len(tokens)} words")
-    if preview:
-        print(f"\nPreview of removed stopwords: {removed_tokens[:10]}")
-        print(f"\nPreview after stopword removal: {filtered_tokens[:10]}")
-
-    return filtered_tokens
 
 def lemmatize_tokens(tokens: List[str], preview: bool = False) -> List[str]:
     """
