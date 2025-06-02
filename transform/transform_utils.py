@@ -12,7 +12,9 @@ from typing import List
 from nltk.corpus import stopwords
 import nltk
 import spacy
+import pandas as pd
 nlp = spacy.load("en_core_web_sm")
+from collections import Counter
 
 
 def read_text_file(file_path: Path, preview: bool = False) -> str:
@@ -131,6 +133,27 @@ def lemmatize_tokens(tokens: List[str], preview: bool = False) -> List[str]:
 
     return lemmatized
 
+def count_frequency (lemmatized : List[str], preview: False) -> pd.DataFrame:
+
+    """
+    Counts the frequency of lemmatized tokens and returns a DataFrame.
+
+    Args:
+        lemmatized (List[str]): List of lemmatized word tokens.
+        preview (bool): Whether to print the top rows.
+
+    Returns:
+        pd.DataFrame: DataFrame with columns ['lemma', 'frequency']
+    """
+
+    word_counts = Counter(lemmatized)  # This turns the list into a dict.
+    df = pd.DataFrame(word_counts.items(), columns=["lemma", "frequency"])
+    
+    print(f"\n✅ Final DataFrame shape: {df.shape}")
+    if preview:
+        print(df.head(10))
+    return df
+
 
 if __name__ == "__main__":
     # Example usage
@@ -141,6 +164,7 @@ if __name__ == "__main__":
         tokens = tokenize_text(cleaned_text, True)
         filtered_tokens = remove_stopwords(tokens, True)
         lemmatized_tokens = lemmatize_tokens(filtered_tokens, True)
+        data_frame = count_frequency(lemmatized_tokens, True)
 
     except Exception as e:
         print(f"Error: {e}")
