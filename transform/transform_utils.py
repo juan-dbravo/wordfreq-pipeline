@@ -13,9 +13,19 @@ from collections import Counter
 
 import pandas as pd
 import spacy
+import logging
 
 nlp = spacy.load("en_core_web_sm")
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s -%(levelname)s -%(message)s",
+    handlers=[
+        logging.FileHandler("pipeline.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 def read_text_file(file_path: Path, preview: bool = False) -> str:
     """
@@ -31,10 +41,11 @@ def read_text_file(file_path: Path, preview: bool = False) -> str:
     if not file_path.exists():
         raise FileNotFoundError(f"The file {file_path} does not exist.")
     text = file_path.read_text(encoding='utf-8')
-    print("\n✅ Text succesfully recognized")
+    logger.info("✅ Text successfully recognized")
+
     if preview:
         print("\nPreview of raw file content:")
-        print(text[:20])  # Show the first 500 characters
+        print(text[:20]) 
     return text
 
 def clean_text_file(text: str, preview: bool = False) -> str:
@@ -63,11 +74,10 @@ def clean_text_file(text: str, preview: bool = False) -> str:
 
     cleaned_text = " ".join(words)
 
-    print("\n✅ Text successfully cleaned using spaCy")
+    logger.info("✅ Text successfully cleaned using spaCy")
 
     if preview:
-        print("\n🔍 Preview of cleaned text:")
-        print(cleaned_text[:500])
+        logger.debug("Preview of cleaned text: %s", cleaned_text[:20])
 
     return cleaned_text
 
@@ -83,11 +93,10 @@ def tokenize_text (cleaned_text: str, preview: bool = False) -> List[str]:
         List[str]: The list of lowercase word tokens.
     """
     tokens = cleaned_text.split()
-    print(f"\n✅ Tokenized {len(tokens)} words")
+    logger.info(f"✅ Tokenized {len(tokens)} words")
 
     if preview:
-        print("\nPreview of tokens:")
-        print(tokens[:10])
+        logger.debug("Preview of tokens: %s", tokens[:10])
 
     return tokens
 
@@ -105,11 +114,13 @@ def lemmatize_tokens(tokens: List[str], preview: bool = False) -> List[str]:
     
     doc = nlp(" ".join(tokens))
     lemmatized = [token.lemma_ for token in doc]
+    logger.info(f"✅ Total lemmatized: {len(lemmatized)}")
+    logger.info(f"🔥 Extracted {len(set(lemmatized))} unique lemmas ")
 
     if preview:
         print("\nspaCy Lemmatization Preview:")
         for original, lemma in zip(tokens[:10], lemmatized[:10]):
-            print(f"  {original:12} → {lemma}")
+            logger.info(f"  {original:12} → {lemma}")
 
     return lemmatized
 
@@ -132,11 +143,10 @@ def count_frequency (lemmatized : List[str], preview: bool = False) -> pd.DataFr
     df = df.reset_index(drop=True)
     df.index += 1
 
-    print(f"\n✅ Final DataFrame shape: {df.shape}\n")
+    logger.info(f"✅ Final DataFrame shape: {df.shape}\n")
     if preview:
         print(df.head(10))
     return df
-
 
 if __name__ == "__main__":
     # Example usage
@@ -145,9 +155,8 @@ if __name__ == "__main__":
         text = read_text_file(file_path)
         cleaned_text = clean_text_file(text)
         tokens = tokenize_text(cleaned_text)
-        filtered_tokens = remove_stopwords(tokens)
-        lemmatized_tokens = lemmatize_tokens(filtered_tokens)
+        lemmatized_tokens = lemmatize_tokens(tokens)
         data_frame = count_frequency(lemmatized_tokens)
 
     except Exception as e:
-        print(f"Error: {e}")
+        logger.exception("Pipeline error")
