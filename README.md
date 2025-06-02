@@ -1,15 +1,35 @@
 # WordFreq Pipeline
 
-## Project Summary
+End-to-end text ETL from raw .txt books to PostgreSQL, using S3, Python, and Airflow.
 
-**What is this?**  
-A modular, Airflow-orchestrated ETL pipeline that extracts a `.txt` file, transforms it by cleaning and tokenizing the text, and loads the results into PostgreSQL as a word frequency table. It enables unique insights into the text through frequency analysis and visualization.
+---
 
-**What for?**  
-The goal of this project is to demonstrate core data engineering concepts using literary text as raw input—showcasing ETL architecture, orchestration, data cleaning, and structured output generation.
+## ***Index***
+
+- [Project Overview](#project-overview)
+- [Installation Instructions](#installation-instructions)
+- [Project Structure](#project-structure)
+- [Pipeline Flow](#pipeline-flow)
+- [Tech Stack](#tech-stack)
+- [Usage Examples](#usage-examples)
+
+---
+
+## Project Overview
+
+***What is this?***  
+A modular, Airflow-orchestrated ETL pipeline that ingests .txt books from Project Gutenberg, uploads them to Amazon S3 (raw zone), processes them with Python by cleaning and tokenizing the text, and stores the cleaned output in S3 (processed zone). The resulting word frequency data is then loaded into PostgreSQL for analysis using SQL queries.
+
+***Applications***
+This could be used as a tool to analyze documents, customer reviews, or legal texts for insight based on word frequency.
+
+***My Personal Goal***  
+Is to demonstrate core data engineering concepts using literary texts as raw input—showcasing ETL architecture, orchestration, data cleaning, and structured output generation.
+
+
+## Installation Instructions
 
 ## Project structure
-
 
 ```bash
 wordfreq-pipeline/
@@ -95,7 +115,6 @@ Project Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → 
 - 
 - Amazon S3 (data lake storage)
 
-
 ## Questions This Pipeline Helps Answer
 
 ### 1. **Thematic Vocabulary**
@@ -112,3 +131,7 @@ Project Gutenberg → S3 (Raw) → Python ETL → S3 (Processed) → SQL DB → 
 ### 3. **Keyword Presence**
 - Are there **signature terms** with unusually high frequency?
 - Are there **unexpected or rare words** given the genre or author?
+
+## Usage Examples
+
+
