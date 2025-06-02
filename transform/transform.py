@@ -4,7 +4,6 @@ from transform.transform_utils import (
     read_text_file,
     clean_text_file,
     tokenize_text,
-    remove_stopwords,
     lemmatize_tokens,
     count_frequency,
 )
@@ -25,8 +24,7 @@ def run_pipeline(file_path: Path, preview: bool = True):
     text = read_text_file(file_path, preview)
     cleaned = clean_text_file(text, preview)
     tokens = tokenize_text(cleaned, preview)
-    filtered = remove_stopwords(tokens, preview)
-    lemmatized = lemmatize_tokens(filtered, preview)
+    lemmatized = lemmatize_tokens(tokens, preview)
     df = count_frequency(lemmatized, preview)
     return df
 
