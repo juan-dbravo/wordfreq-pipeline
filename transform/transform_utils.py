@@ -16,6 +16,7 @@ import spacy
 import logging
 
 nlp = spacy.load("en_core_web_sm")
+nlp.max_length = 2_000_000
 
 logging.basicConfig(
     level=logging.INFO,
@@ -151,13 +152,13 @@ def count_frequency (lemmatized : List[str], preview: bool = False) -> pd.DataFr
 
 if __name__ == "__main__":
     # Example usage
-    file_path = Path(__file__).parent.parent / "data/raw_data/Alice.txt" 
+    file_path = Path(__file__).parent.parent / "data/raw_data/crime.txt" 
     try:
-        text = read_text_file(file_path)
-        cleaned_text = clean_text_file(text)
-        tokens = tokenize_text(cleaned_text)
-        lemmatized_tokens = lemmatize_tokens(tokens)
-        data_frame = count_frequency(lemmatized_tokens)
+        text = read_text_file(file_path, True)
+        cleaned_text = clean_text_file(text, True)
+        tokens = tokenize_text(cleaned_text, True)
+        lemmatized_tokens = lemmatize_tokens(tokens, True)
+        data_frame = count_frequency(lemmatized_tokens, True)
 
     except Exception as e:
         logger.exception("Pipeline error")
