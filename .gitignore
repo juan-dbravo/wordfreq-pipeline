@@ -173,8 +173,12 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+data/.DS_Store
+
 # Ignore the raw Robin Hood text
 data/raw_data/robin_hood.txt
 
+
 # Ignore the cleaned CSV lemmas
 data/clean_data/robin_lemmas.csv
+data/clean_data/crime_lemmas.csv
