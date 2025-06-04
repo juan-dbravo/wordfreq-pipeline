@@ -182,3 +182,7 @@ data/raw_data/robin_hood.txt
 # Ignore the cleaned CSV lemmas
 data/clean_data/robin_lemmas.csv
 data/clean_data/crime_lemmas.csv
+
+# Ignore AWS CLI installer files
+aws/
+awscliv2.zip
