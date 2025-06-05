@@ -11,6 +11,7 @@ a centralized Python file where I define all the functions that interact with AW
 
 """
 import boto3
+from pathlib import Path
 
 def upload_to_s3(local_path, bucket_name, s3_path):
     """
